@@ -2,7 +2,7 @@ import { useState } from 'react'
 import BrainDumpScreen from './components/BrainDumpScreen.jsx'
 import ChatScreen from './components/ChatScreen.jsx'
 
-const API_URL = `${import.meta.env.VITE_API_URL ?? 'http://localhost:8000'}/api/chat`
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 export default function App() {
   const [screen, setScreen] = useState('braindump')
@@ -16,7 +16,7 @@ export default function App() {
     setIsLoading(true)
 
     try {
-      const res = await fetch(API_URL, {
+      const res = await fetch(`${API_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: updatedMessages }),

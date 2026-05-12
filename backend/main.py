@@ -30,14 +30,22 @@ client = openai.OpenAI(
 
 app = FastAPI()
 
-allowed_origins = os.getenv("ALLOWED_ORIGIN", "http://localhost:5173").split(",")
+allowed_origins = os.getenv(
+    "ALLOWED_ORIGINS",
+    "http://localhost:5173,http://localhost:4173"
+).split(",")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_methods=["POST", "OPTIONS"],
+    allow_origins=[origin.strip() for origin in allowed_origins],
+    allow_methods=["POST", "OPTIONS", "GET"],
     allow_headers=["Content-Type"],
 )
+
+
+@app.get("/")
+def health():
+    return {"status": "ok", "app": "mente-calma"}
 
 
 class Message(BaseModel):
