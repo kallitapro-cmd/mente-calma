@@ -2,7 +2,7 @@ import { useState } from 'react'
 import BrainDumpScreen from './components/BrainDumpScreen.jsx'
 import ChatScreen from './components/ChatScreen.jsx'
 
-const API_URL = 'http://localhost:8000/api/chat'
+const API_URL = `${import.meta.env.VITE_API_URL ?? 'http://localhost:8000'}/api/chat`
 
 export default function App() {
   const [screen, setScreen] = useState('braindump')
